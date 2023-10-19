@@ -45,3 +45,21 @@ best_first_search(source, target, v)
 
 # The worst-case time complexity for Best First Search is O(n * log n) where n is the number of nodes.
 #     Space complexity: O(V+E)
+
+# // Pseudocode for Best First Search
+# Best-First-Search(Graph g, Node start)
+#     1) Create an empty PriorityQueue
+#        PriorityQueue pq;
+#     2) Insert "start" in pq.
+#        pq.insert(start)
+#     3) Until PriorityQueue is empty
+#           u = PriorityQueue.DeleteMin
+#           If u is the goal
+#              Exit
+#           Else
+#              Foreach neighbor v of u
+#                 If v "Unvisited"
+#                     Mark v "Visited"                    
+#                     pq.insert(v)
+#              Mark u "Examined"                    
+# End procedure

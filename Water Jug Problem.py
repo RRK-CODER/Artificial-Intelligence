@@ -32,3 +32,32 @@ if not waterJugSolver(0, 0):
 
 
 # Time complexity: O(M * N) Auxiliary Space: O(M * N) where M and N are the capacities of the two jugs.
+
+# Algorithm: Water Jug Problem Solver
+
+# Inputs:
+# - jug1: Capacity of the first jug
+# - jug2: Capacity of the second jug
+# - aim: Desired amount of water
+# - visited: Dictionary to keep track of visited states
+
+# 1. Define a function waterJugSolver(amt1, amt2):
+#    a. If either jug1 or jug2 contains the desired amount of water, print success message and return True.
+#    b. If the current state (amt1, amt2) has not been visited:
+#       i. Print the current state.
+#       ii. Mark the current state as visited.
+#       iii. Recursively explore the following possibilities:
+#            - Fill jug1 to capacity and continue exploration.
+#            - Fill jug2 to capacity and continue exploration.
+#            - Empty jug1 and continue exploration.
+#            - Empty jug2 and continue exploration.
+#            - Pour water from jug1 to jug2 and continue exploration.
+#            - Pour water from jug2 to jug1 and continue exploration.
+#    c. If all recursive calls return False, return False.
+
+# Main:
+# 1. Print "Steps:"
+# 2. If the waterJugSolver(0, 0) returns False, print "Cannot achieve the desired result."
+
+# Time complexity: O(M * N) where M and N are the capacities of the two jugs.
+# Auxiliary Space: O(M * N) due to the visited dictionary.

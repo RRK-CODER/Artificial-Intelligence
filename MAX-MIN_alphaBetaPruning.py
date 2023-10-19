@@ -32,3 +32,4 @@ if __name__ == "__main__":
 # The space complexity is O(d) 
 # b is the branching factor (maximum number of successors any node can have).
 # d is the depth of the shallowest goal node.
+

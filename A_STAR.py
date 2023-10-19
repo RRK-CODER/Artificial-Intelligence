@@ -85,3 +85,19 @@ aStarAlgo('A', 'J')
 # d is the depth of the shallowest goal node.
 
 # The space complexity is O(b^d) due to the number of nodes that may need to be stored in memory.
+
+#Intialize the open list with the starting node along with a priority based on the combined f score(g_score+ heuristic score) of the node
+#create dictionary to store parent nodes(came-from), g_score and f_score for each node
+#set the g_score of starting node to 0 and f_score to heuristic score
+#enter a loop while the open list is not empty
+    #extrcat the node with the lowest f_score from the open list
+    #if the current node is the goal node, reconstruct the path using the came_from dictionary and return it
+    # for each neighbor of the current node
+        #calculate the g_score of the neighbor
+        #if the calculated g_score is less than the g_score of the neighbor, update the g_score and f_score of the neighbor
+        #add the neighbor to the open list if it is not there already
+            #calculate a tentative g_score by adding the edge cost from the current node to the neighbor
+            #if this tentative g score is better than the recorded g_score of the neighbor, update the g_score and f_score of the neighbor and set the current node as its parent
+            #if the neighbor is not in the open list, add it with it's f score to the open list
+    #if the open list becomes empty and the goal is not reached, there is no path
+    

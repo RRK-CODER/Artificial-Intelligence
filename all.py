@@ -35,7 +35,31 @@ if not waterJugSolver(0, 0):
 
 
 # Time complexity: O(M * N) Auxiliary Space: O(M * N) where M and N are the capacities of the two jugs.
+# Algorithm: Water Jug Problem Solver
 
+# Inputs:
+# - jug1: Capacity of the first jug
+# - jug2: Capacity of the second jug
+# - aim: Desired amount of water
+# - visited: Dictionary to keep track of visited states
+
+# 1. Define a function waterJugSolver(amt1, amt2):
+#    a. If either jug1 or jug2 contains the desired amount of water, print success message and return True.
+#    b. If the current state (amt1, amt2) has not been visited:
+#       i. Print the current state.
+#       ii. Mark the current state as visited.
+#       iii. Recursively explore the following possibilities:
+#            - Fill jug1 to capacity and continue exploration.
+#            - Fill jug2 to capacity and continue exploration.
+#            - Empty jug1 and continue exploration.
+#            - Empty jug2 and continue exploration.
+#            - Pour water from jug1 to jug2 and continue exploration.
+#            - Pour water from jug2 to jug1 and continue exploration.
+#    c. If all recursive calls return False, return False.
+
+# Main:
+# 1. Print "Steps:"
+# 2. If the waterJugSolver(0, 0) returns False, print "Cannot achieve the desired result."
 UCS 
 def uniform_cost_search(goal, start):
     global graph, cost
@@ -110,6 +134,20 @@ if __name__ == '__main__':
 # E is the number of edges
 # '''
 
+# instead of inserting all vertices into a priority queue, we 
+# insert only the source, then one by one insert when needed. 
+# In every step, we check if the item is already in the priority queue 
+# (using the visited array). If yes, we perform the decrease key, else we insert it.
+# Uniform-Cost Search is similar to Dijikstra’s algorithm. In this algorithm from the starting state, we will visit the adjacent states
+# and will choose the least costly state then we will choose the next least costly state from the all un-visited and adjacent states of the visited states, 
+# in this way we will try to reach the goal state (note we won’t continue the path through a goal state ), even if we reach the goal state we will continue searching 
+# for other possible paths( if there are multiple goals). We will keep a priority queue that will give the least costly next state from all the adjacent states of visited states.
+
+# Insert the source node into the priority queue
+#remove the element with the highest priority from the priority queue
+#if the removed node is the destination, print total cost and stop the algorithm
+#else if check if the node is in the visited array, if not then add it to the visited array and add all the adjacent nodes with the cumulative cost as the priority in the priority queue
+#repeat the steps from 2 until the priority queue is empty
 A*
 
 def aStarAlgo(start_node, stop_node):
@@ -200,6 +238,22 @@ aStarAlgo('A', 'J')
 
 # The space complexity is O(b^d) due to the number of nodes that may need to be stored in memory.
 
+#Intialize the open list with the starting node along with a priority based on the combined f score(g_score+ heuristic score) of the node
+#create dictionary to store parent nodes(came-from), g_score and f_score for each node
+#set the g_score of starting node to 0 and f_score to heuristic score
+#enter a loop while the open list is not empty
+    #extrcat the node with the lowest f_score from the open list
+    #if the current node is the goal node, reconstruct the path using the came_from dictionary and return it
+    # for each neighbor of the current node
+        #calculate the g_score of the neighbor
+        #if the calculated g_score is less than the g_score of the neighbor, update the g_score and f_score of the neighbor
+        #add the neighbor to the open list if it is not there already
+            #calculate a tentative g_score by adding the edge cost from the current node to the neighbor
+            #if this tentative g score is better than the recorded g_score of the neighbor, update the g_score and f_score of the neighbor and set the current node as its parent
+            #if the neighbor is not in the open list, add it with it's f score to the open list
+    #if the open list becomes empty and the goal is not reached, there is no path
+    
+
 MAXMIN
 
 MAX, MIN = 1000, -1000
@@ -287,6 +341,24 @@ best_first_search(source, target, v)
 # The worst-case time complexity for Best First Search is O(n * log n) where n is the number of nodes.
 #     Space complexity: O(V+E)
 
+// Pseudocode for Best First Search
+# Best-First-Search(Graph g, Node start)
+#     1) Create an empty PriorityQueue
+#        PriorityQueue pq;
+#     2) Insert "start" in pq.
+#        pq.insert(start)
+#     3) Until PriorityQueue is empty
+#           u = PriorityQueue.DeleteMin
+#           If u is the goal
+#              Exit
+#           Else
+#              Foreach neighbor v of u
+#                 If v "Unvisited"
+#                     Mark v "Visited"                    
+#                     pq.insert(v)
+#              Mark u "Examined"                    
+# End procedure
+
 Map Coloring
 
 V = 4
@@ -321,3 +393,17 @@ else:
 
 # space complexity is O(V^2)
 # time complexity is O(V^E)
+
+# Follow the given steps to solve the problem:
+
+# Create a recursive function that takes the graph, current index, number of vertices, and color array.
+# If the current index is equal to the number of vertices. Print the color configuration in the color array.
+# Assign a color to a vertex from the range (1 to m).
+# For every assigned color, check if the configuration is safe, (i.e. check if the adjacent vertices do not have the same color) and recursively call the function with the next index and number of vertices otherwise, return false
+# If any recursive function returns true then return true
+# If no recursive function returns true then return false
+# Illustration:
+# To color the graph, color each node one by one.
+# To color the first node there are 3 choices of colors Red, Green and Blue, so lets take the red color for first node.
+# After Red color for first node is fixed then we have made choice for second node in similar manner as we did for first node, then for 3rd node and so on.
+# There is one important point to remember. while choosing color for the node, it should not be same as the color of the adjacent node.

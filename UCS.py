@@ -70,3 +70,18 @@ if __name__ == '__main__':
 # V is the number of vertices
 # E is the number of edges
 # '''
+
+# instead of inserting all vertices into a priority queue, we 
+# insert only the source, then one by one insert when needed. 
+# In every step, we check if the item is already in the priority queue 
+# (using the visited array). If yes, we perform the decrease key, else we insert it.
+# Uniform-Cost Search is similar to Dijikstra’s algorithm. In this algorithm from the starting state, we will visit the adjacent states
+# and will choose the least costly state then we will choose the next least costly state from the all un-visited and adjacent states of the visited states, 
+# in this way we will try to reach the goal state (note we won’t continue the path through a goal state ), even if we reach the goal state we will continue searching 
+# for other possible paths( if there are multiple goals). We will keep a priority queue that will give the least costly next state from all the adjacent states of visited states.
+
+# Insert the source node into the priority queue
+#remove the element with the highest priority from the priority queue
+#if the removed node is the destination, print total cost and stop the algorithm
+#else if check if the node is in the visited array, if not then add it to the visited array and add all the adjacent nodes with the cumulative cost as the priority in the priority queue
+#repeat the steps from 2 until the priority queue is empty
