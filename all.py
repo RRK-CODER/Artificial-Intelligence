@@ -439,3 +439,166 @@ else:
 # To color the first node there are 3 choices of colors Red, Green and Blue, so lets take the red color for first node.
 # After Red color for first node is fixed then we have made choice for second node in similar manner as we did for first node, then for 3rd node and so on.
 # There is one important point to remember. while choosing color for the node, it should not be same as the color of the adjacent node.
+
+New max min 
+import math
+
+def minimax(curDepth, nodeIndex, maxTurn, scores, targetDepth):
+    if curDepth == targetDepth:
+        return scores[nodeIndex]
+
+    if maxTurn:
+        return max(minimax(curDepth + 1, nodeIndex * 2, False, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1, False, scores, targetDepth))
+    else:
+        return min(minimax(curDepth + 1, nodeIndex * 2, True, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1, True, scores, targetDepth))
+
+scores = [3, 5, 2, 9, 12, 5, 23, 23]
+treeDepth = math.log2(len(scores))
+print("The optimal value is:", end=" ")
+print(minimax(0, 0, True, scores, treeDepth))
+
+new best first search 
+
+from cmath import inf
+
+def bestfs(start_node, stop_node):
+    open_set = {start_node}
+    closed_set = set()
+    g = {start_node: 0}
+    parents = {start_node: start_node}
+
+    while open_set:
+        n = None
+        for v in open_set:
+            if n == None or heuristic(v) < heuristic(n):
+                n = v
+
+        if n == stop_node or Graph_nodes[n] == None:
+            pass
+        else:
+            for m in get_neighbors(n) or []:
+                if m not in open_set and m not in closed_set:
+                    open_set.add(m)
+                    parents[m] = n
+
+        if n == None:
+            print('Path does not exist!')
+            return None
+        if n == stop_node:
+            path = []
+            while parents[n] != n:
+                path.append(n)
+                n = parents[n]
+            path.append(start_node)
+            path.reverse()
+            print('Path found: {}'.format(path))
+            return path
+        open_set.remove(n)
+        closed_set.add(n)
+
+
+def get_neighbors(v):
+    if v in Graph_nodes:
+        return Graph_nodes[v]
+    else:
+        return None
+
+def heuristic(n):
+    H_dist = {
+        'S': 2,
+        'A': 8,
+        'B': 4,
+        'C': 3,
+        'D': inf,
+        'E': inf,
+        'G': 0
+    }
+    return H_dist.get(n, inf)
+
+Graph_nodes = {
+    'S': ['A', 'B', 'C'],
+    'A': ['D', 'E', 'G'],
+    'B': ['G'],
+    'C': ['G'],
+}
+
+bestfs('S', 'G')
+
+new a aStarAlgo
+from cmath import inf
+
+def aStarAlgo(start_node, stop_node):
+    open_set = set([start_node])
+    closed_set = set()
+    g = {start_node: 0}  # store distance from starting node
+    parents = {start_node: start_node}  # parents contain an adjacency map of all nodes
+    
+    while len(open_set) > 0:
+        n = None
+        # node with the lowest f() is found
+        for v in open_set:
+            if n is None or g[v] + heuristic(v) < g[n] + heuristic(n):
+                n = v
+
+        if n == stop_node or n not in Graph_nodes:
+            break
+        else:
+            open_set.remove(n)
+            closed_set.add(n)
+            
+            for (m, weight) in get_neighbors(n):
+                if m not in open_set and m not in closed_set:
+                    open_set.add(m)
+                    parents[m] = n
+                    g[m] = g[n] + weight
+                else:
+                    if g[m] > g[n] + weight:
+                        g[m] = g[n] + weight
+                        parents[m] = n
+                        if m in closed_set:
+                            closed_set.remove(m)
+                            open_set.add(m)
+
+    if n == stop_node:
+        path = []
+        while parents[n] != n:
+            path.append(n)
+            n = parents[n]
+        path.append(start_node)
+        path.reverse()
+        print('Path found: {}'.format(path))
+        return path
+    else:
+        print('Path does not exist!')
+        return None
+
+# define function to return neighbors and their distance
+# from the passed node
+def get_neighbors(v):
+    if v in Graph_nodes:
+        return Graph_nodes[v]
+    else:
+        return None
+
+def heuristic(n):
+    H_dist = {
+        'S': 2,
+        'A': 8,
+        'B': 4,
+        'C': 3,
+        'D': float('inf'),
+        'E': float('inf'),
+        'G': 0
+    }
+    return H_dist[n]
+
+Graph_nodes = {
+    'S': [('A', 1), ('B', 5), ('C', 8)],
+    'A': [('D', 3), ('E', 7), ('G', 9)],
+    'B': [('G', 4)],
+    'C': [('G', 5)],
+}
+
+aStarAlgo('S', 'G')
